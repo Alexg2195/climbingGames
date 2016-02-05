@@ -3,12 +3,17 @@ $(document).ready(function () {
   var sec = 0;
   var min = 0;
   var timer = 0;
+  var timing = false;
 
   $(document).on("click", "#startTimer", function () {
-    timer = setInterval(runStopWatch, 100);
+    if (!timing) {
+      timing = true;
+      timer = setInterval(runStopWatch, 100);
+    };
   });
 
   $(document).on("click", "#stopTimer", function () {
+    timing = false;
     clearInterval(timer);
   });
 
@@ -25,8 +30,19 @@ $(document).ready(function () {
       min ++;
     };
 
-    console.log(miliSec);
-    console.log(sec);
-    console.log(min);
+    printTime();
   };
+
+  $(document).on("click", "#resetTimer", function () {
+    miliSec = 0;
+    sec = 0;
+    min = 0;
+    printTime();
+  });
+
+  function printTime (argument) {
+    $(".min").text(min);
+    $(".sec").text(sec);
+    $(".miliSec").text(miliSec);
+  }
 })

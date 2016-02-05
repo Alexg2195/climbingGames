@@ -1,5 +1,23 @@
 @import 'http://fonts.googleapis.com/css?family=Quantico|Cabin+Condensed|Dosis|Electrolize|Spinnaker|Francois+One|Iceberg|Share|Tulpen+One|Wallpoet';
 
+.time {
+  background: #000;
+  border-bottom: 1px solid #aaa;
+  color: #dcecff;
+  font-family: 'Wallpoet', cursive;
+  font-size: 40px;
+  padding: 10px;
+  text-align: center;
+  text-shadow: 0 0 3px #dcecff;
+}
+.sec:before {
+  content: ': ';
+}
+.sec:after {
+  content: ' :';
+}
+
+
 .stopwatch.theme-10 {
   border: 3px solid #aaa;
   -webkit-border-top-left-radius: 5px;
@@ -23,22 +41,8 @@
   -webkit-box-sizing: border-box;
   position: relative;
 }
-.stopwatch.theme-10 .the-time {
-  background: #000;
-  border-bottom: 1px solid #aaa;
-  color: #dcecff;
-  font-family: 'Wallpoet', cursive;
-  font-size: 40px;
-  padding: 10px;
-  text-align: center;
-  text-shadow: 0 0 3px #dcecff;
-}
-.stopwatch.theme-10 .min:before {
-  content: ':';
-}
-.stopwatch.theme-10 .min:after {
-  content: ':';
-}
+
+
 .stopwatch.theme-10 .reset,
 .stopwatch.theme-10 .start-stop {
   background: #499bea;
