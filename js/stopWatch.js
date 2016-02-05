@@ -41,8 +41,14 @@ $(document).ready(function () {
   });
 
   function printTime (argument) {
-    $(".min").text(min);
-    $(".sec").text(sec);
-    $(".miliSec").text(miliSec);
+    $(".min").text(pad(min));
+    $(".sec").text(pad(sec));
+    $(".miliSec").text(pad(miliSec));
+  }
+
+  function pad(num) {
+    var newNum = num.toString();
+    while (newNum.length < 2) newNum = "0" + newNum;
+    return newNum;
   }
 })
