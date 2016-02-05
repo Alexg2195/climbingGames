@@ -1,0 +1,84 @@
+@import 'http://fonts.googleapis.com/css?family=Quantico|Cabin+Condensed|Dosis|Electrolize|Spinnaker|Francois+One|Iceberg|Share|Tulpen+One|Wallpoet';
+
+.stopwatch.theme-10 {
+  border: 3px solid #aaa;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-family: helvetica, arial, sans-serif;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  width: 260px;
+}
+.stopwatch.theme-10 * {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  position: relative;
+}
+.stopwatch.theme-10 .the-time {
+  background: #000;
+  border-bottom: 1px solid #aaa;
+  color: #dcecff;
+  font-family: 'Wallpoet', cursive;
+  font-size: 40px;
+  padding: 10px;
+  text-align: center;
+  text-shadow: 0 0 3px #dcecff;
+}
+.stopwatch.theme-10 .min:before {
+  content: ':';
+}
+.stopwatch.theme-10 .min:after {
+  content: ':';
+}
+.stopwatch.theme-10 .reset,
+.stopwatch.theme-10 .start-stop {
+  background: #499bea;
+  background: -moz-linear-gradient(top, #499bea 0%, #207ce5 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #499bea), color-stop(100%, #207ce5));
+  background: -webkit-linear-gradient(top, #499bea 0%, #207ce5 100%);
+  background: -o-linear-gradient(top, #499bea 0%, #207ce5 100%);
+  background: -ms-linear-gradient(top, #499bea 0%, #207ce5 100%);
+  background: linear-gradient(to bottom, #499bea 0%, #207ce5 100%);
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#499bea', endColorstr='#207ce5', GradientType=0);
+  display: block;
+  width: 50%;
+  float: left;
+  color: #fff;
+  font-weight: bold;
+  font-size: 11px;
+  text-align: center;
+  padding: 5px 0 4px 0;
+  text-decoration: none;
+  text-shadow: 1px 1px 1px #000000;
+  text-transform: uppercase;
+}
+.stopwatch.theme-10 .reset:active,
+.stopwatch.theme-10 .start-stop:active {
+  text-shadow: none;
+}
+.stopwatch.theme-10 .reset:hover,
+.stopwatch.theme-10 .start-stop:hover {
+  background: #207ce5;
+  background: -moz-linear-gradient(top, #207ce5 0%, #499bea 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #207ce5), color-stop(100%, #499bea));
+  background: -webkit-linear-gradient(top, #207ce5 0%, #499bea 100%);
+  background: -o-linear-gradient(top, #207ce5 0%, #499bea 100%);
+  background: -ms-linear-gradient(top, #207ce5 0%, #499bea 100%);
+  background: linear-gradient(to bottom, #207ce5 0%, #499bea 100%);
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#207ce5', endColorstr='#499bea', GradientType=0);
+}
+.stopwatch.theme-10 .reset {
+  border-left: 1px solid #4f7199;
+}
+.stopwatch.theme-10 .start-stop {
+  border-right: 1px solid #7da7d9;
+}
