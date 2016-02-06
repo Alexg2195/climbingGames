@@ -1,16 +1,16 @@
 $(document).ready(function () {
-  var element = null;
+  var timerElement = null;
 
   $('#myStopWatch').on('mouseover', function(e) {
-      element = $(e.currentTarget);
+      timerElement = $(e.currentTarget);
   });
 
   $('#myStopWatch').on('mouseout', function(e) {
-      element = null;
+      timerElement = null;
   });
 
   $(document).keypress(function(e) {
-      if (e.which == 61 && element) {
+      if (e.which == 61 && timerElement) {
         var newPxSize = parseInt($(".time").css("font-size"));
         if (30 > newPxSize < 100) {
           newPxSize += 10;
@@ -21,7 +21,7 @@ $(document).ready(function () {
         };
       }
 
-      if (e.which == 45 && element) {
+      if (e.which == 45 && timerElement) {
         var newPxSize = parseInt($(".time").css("font-size"));
         if (30 > newPxSize < 100) {
           newPxSize -= 10;

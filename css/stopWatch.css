@@ -3,6 +3,7 @@
 #myStopWatch {
   height: 50px;
   display: inline-block;
+  position: absolute;
 }
 
 .time {
