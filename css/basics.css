@@ -2,8 +2,59 @@ body {
   background-color: black;
 }
 
+.edit-icon {
+  display: inline-block;
+  width: 40px;
+  opacity: 0.25;
+}
+
 .icon {
   display: inline-block;
   width: 40px;
   position: absolute;
+}
+
+#icon1 {
+  left: 100px;
+  display: none;
+}
+
+#icon2 {
+  left: 150px;
+  display: none;
+}
+
+#icon3 {
+  left: 200px;
+  display: none;
+}
+
+#icon4 {
+  left: 250px;
+  display: none;
+}
+
+#icon5 {
+  left: 300px;
+  display: none;
+}
+
+#icon6 {
+  left: 350px;
+  display: none;
+}
+
+#icon7 {
+  left: 400px;
+  display: none;
+}
+
+#icon8 {
+  left: 450px;
+  display: none;
+}
+
+#icon9 {
+  left: 500px;
+  display: none;
 }
