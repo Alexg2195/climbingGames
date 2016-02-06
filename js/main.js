@@ -1,7 +1,25 @@
 $(document).ready(function () {
   var circleCount = 0;
+  var touchCount = 0;
   var timerElement = null;
   var iconElement = null;
+
+// To added and subtract amount of circles in play
+// logs variable for amount of circles shown
+
+  $("#addCircle").on("click", function () {
+    if (circleCount < 9) {
+      circleCount++;
+      $("#icon" + circleCount).css("display", "inline-block");
+    };
+  });
+
+  $("#minusCircle").on("click", function () {
+    if (circleCount > 0) {
+      $("#icon" + circleCount).css("display", "none");
+      circleCount--;
+    };
+  });
 
 // Logging mouse over data for the timer and icons as a variable
 
@@ -24,10 +42,22 @@ $(document).ready(function () {
 // Listening for keypresses
 // 61 is (+=) key
 // 45 is (-_) key
+// 32 is spacebar
+
+  $(document).keypress(function(e) {
+
+// Space bar takes away the circles as the player climbs
+
+    if (e.which = 32) {
+      touchCount++;
+      console.log(touchCount);
+      console.log("#icon" + touchCount);
+      $("#icon" + touchCount).addClass('zoomOut'); //THIS LINE IS NOT WORKING
+    };
+
 // Sizes are changed by width (for icons) or font-size (for timer)
 // 10 px is the amount of change atm
 
-  $(document).keypress(function(e) {
     if (e.which == 61 && timerElement) {
       var newPxSize = parseInt($(".time").css("font-size"));
       if (30 <= newPxSize && newPxSize < 100) {
@@ -63,23 +93,6 @@ $(document).ready(function () {
         $("#" + iconElement[0].id).css("width", newPxSize);
       };
     }
-  });
-
-// To added and subtract amount of circles in play
-// logs variable for amount of circles shown
-
-  $("#addCircle").on("click", function () {
-    if (circleCount < 9) {
-      circleCount++;
-      $("#icon" + circleCount).css("display", "inline-block");
-    };
-  });
-
-  $("#minusCircle").on("click", function () {
-    if (circleCount > 0) {
-      $("#icon" + circleCount).css("display", "none");
-      circleCount--;
-    };
   });
 
 // gives the draggable functionality

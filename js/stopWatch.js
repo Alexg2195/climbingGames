@@ -4,7 +4,6 @@ $(document).ready(function () {
   var min = 0;
   var timer = 0;
   var timing = false;
-  var points = 0;
 
   $(document).keypress(function (event) {
     // console.log(event.which);
@@ -15,18 +14,10 @@ $(document).ready(function () {
       case 92:
         reset();
         break;
-      case 32:
-        incPoints();
-        break;
       default:
         break;
     }
   });
-
-  function incPoints () {
-    points++;
-    console.log(points);
-  }
 
   function startStop () {
     if (!timing) {
