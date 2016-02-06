@@ -1,3 +1,3 @@
-$(function() {
-  $('#myStopwatch').stopwatch('theme-10');
-});
+  $(function() {
+    $( ".draggable" ).draggable();
+  });
