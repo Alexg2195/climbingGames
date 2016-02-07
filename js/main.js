@@ -45,20 +45,19 @@ $(document).ready(function () {
 // 32 is spacebar
 
   $(document).keypress(function(e) {
+    // console.log(e.which);
 
 // Space bar takes away the circles as the player climbs
 
-    if (e.which = 32) {
+    if (e.which === 32) {
       touchCount++;
-      console.log(touchCount);
-      console.log("#icon" + touchCount);
-      $("#icon" + touchCount).addClass('zoomOut'); //THIS LINE IS NOT WORKING
+      $("#icon" + touchCount).addClass('zoomOut');
     };
 
 // Sizes are changed by width (for icons) or font-size (for timer)
 // 10 px is the amount of change atm
 
-    if (e.which == 61 && timerElement) {
+    if (e.which === 61 && timerElement) {
       var newPxSize = parseInt($(".time").css("font-size"));
       if (30 <= newPxSize && newPxSize < 100) {
         newPxSize += 10;
@@ -67,7 +66,7 @@ $(document).ready(function () {
       };
     }
 
-    if (e.which == 45 && timerElement) {
+    if (e.which === 45 && timerElement) {
       var newPxSize = parseInt($(".time").css("font-size"));
       if (30 < newPxSize && newPxSize <= 100) {
         newPxSize -= 10;
@@ -76,7 +75,7 @@ $(document).ready(function () {
       };
     }
 
-    if (e.which == 61 && iconElement) {
+    if (e.which === 61 && iconElement) {
       var newPxSize = parseInt($("#" + iconElement[0].id).css("width"));
       if (30 <= newPxSize && newPxSize < 100) {
         newPxSize += 10;
@@ -85,7 +84,7 @@ $(document).ready(function () {
       };
     }
 
-    if (e.which == 45 && iconElement) {
+    if (e.which === 45 && iconElement) {
       var newPxSize = parseInt($("#" + iconElement[0].id).css("width"));
       if (30 < newPxSize && newPxSize <= 100) {
         newPxSize -= 10;
@@ -95,7 +94,15 @@ $(document).ready(function () {
     }
   });
 
+  var bindSetupControls function () {
+    
+  }
+
+  var bindGameControls function() {
+    
+  }
+
 // gives the draggable functionality
 
   $(".draggable").draggable();
-})
+});
