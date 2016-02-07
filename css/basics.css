@@ -16,7 +16,7 @@ body {
 
 #icon1 {
   left: 100px;
-  display: none;
+  display: inline-block;
 }
 
 #icon2 {
