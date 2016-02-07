@@ -4,89 +4,125 @@ $(document).ready(function () {
   var timerElement = null;
   var iconElement = null;
   var gameRunning = false;
+  var newPxSize = 0;
 
-// Listening for keypresses
-// 61 is (+=) key
-// 45 is (-_) key
-// 32 is spacebar
-// 13 = ENTER
-// 92 = \ key
+  bindDrag();
 
-  $(document).keypress(function(e) {
-    // console.log(e.which);
+  // Listening for keypresses
 
-// Sets gameRunning variable to allow controls or not
-
-    if (e.which === 13) {
-      if (gameRunning === false) {
-        gameRunning = true;
-        unbindDrag();
-      } else {
-        gameRunning = false;
-        bindDrag();
-      }
-    };
-
-// Will turn gameRunning variable off to stop game controls
-
-    if (e.which === 92) {
-      gameRunning = false;
-      bindDrag();
-      resetCircles();
-    };
-
-// Space bar takes away the circles as the player climbs
-
-    if (e.which === 32 && gameRunning === true) {
-      touchCount++;
-      $("#icon" + touchCount).addClass('zoomOut');
-      if (touchCount === circleCount) {
-        completedGame();
-      };
-    };
-
-// Sizes are changed by width (for icons) or font-size (for timer)
-// 10 px is the amount of change atm
-
-    if (e.which === 61 && timerElement && gameRunning === false) {
-      var newPxSize = parseInt($(".time").css("font-size"));
-      if (30 <= newPxSize && newPxSize < 100) {
-        newPxSize += 10;
-        newPxSize = newPxSize + "" + "px";
-        $(".time").css("font-size", newPxSize);
-      };
-    }
-
-    if (e.which === 45 && timerElement && gameRunning === false) {
-      var newPxSize = parseInt($(".time").css("font-size"));
-      if (30 < newPxSize && newPxSize <= 100) {
-        newPxSize -= 10;
-        newPxSize = newPxSize + "" + "px";
-        $(".time").css("font-size", newPxSize);
-      };
-    }
-
-    if (e.which === 61 && iconElement && gameRunning === false) {
-      var newPxSize = parseInt($("#" + iconElement[0].id).css("width"));
-      if (30 <= newPxSize && newPxSize < 100) {
-        newPxSize += 10;
-        newPxSize = newPxSize + "" + "px";
-        $("#" + iconElement[0].id).css("width", newPxSize);
-      };
-    }
-
-    if (e.which === 45 && iconElement && gameRunning === false) {
-      var newPxSize = parseInt($("#" + iconElement[0].id).css("width"));
-      if (30 < newPxSize && newPxSize <= 100) {
-        newPxSize -= 10;
-        newPxSize = newPxSize + "" + "px";
-        $("#" + iconElement[0].id).css("width", newPxSize);
-      };
+  $(document).keypress(function (event) {
+    // console.log(event.which);
+    switch (event.which) {
+      case 13:                        // ENTER
+        if (gameRunning === false) {
+          startGame();
+        };
+        break;
+      case 92:                        // \ key
+        resetGame();
+        break;
+      case 32:                        // SPACEBAR
+        if (gameRunning === true) {
+          pointScored();
+        };
+        break;
+      case 61:                        // (+=) key
+        if (gameRunning === false) {
+          if (timerElement) {
+            biggerTimer();
+          };
+          if (iconElement) {
+            biggerElement();
+          };
+        };
+        break;
+      case 45:                        // (-_) key
+        if (gameRunning === false) {
+          if (timerElement) {
+            smallerTimer();
+          };
+          if (iconElement) {
+            smallerElement();
+          };
+        };
+        break;
+      default:
+        break;
     }
   });
 
-// To added and subtract amount of circles in play
-// logs variable for amount of circles shown
+  function startGame () {
+    startTimer();         //Starts Timer
+    gameRunning = true;   //Kills most setup Controls
+    unbindDrag();         //Kills draggable controls
+  }
+
+  function resetGame () {
+    resetTimer();         //Resets Timer
+    gameRunning = false;  //Enables most Setup Controls
+    bindDrag();           //Enables draggable controls
+    resetCircles();       //Resets Circles
+  }
+
+  function pointScored () {
+    touchCount++;
+    $("#icon" + touchCount).addClass('zoomOut');
+    if (touchCount === circleCount) {
+      completedGame();
+    };
+  }
+
+  function completedGame () {
+    stopTimer();
+  }
+
+  function resetCircles () {
+    for (var i = touchCount; i > 0; i--) {
+        $("#icon" + i).removeClass('zoomOut');
+      };
+    touchCount = 0;
+  }
+
+  function biggerTimer () {
+    newPxSize = parseInt($(".time").css("font-size"));
+    if (30 <= newPxSize && newPxSize < 100) {
+      newPxSize += 10;
+      newPxSize = newPxSize + "" + "px";
+      $(".time").css("font-size", newPxSize);
+    };
+  }
+
+  function smallerTimer () {
+    newPxSize = parseInt($(".time").css("font-size"));
+    if (30 < newPxSize && newPxSize <= 100) {
+      newPxSize -= 10;
+      newPxSize = newPxSize + "" + "px";
+      $(".time").css("font-size", newPxSize);
+    };
+  }
+
+  function biggerElement () {
+    newPxSize = parseInt($("#" + iconElement[0].id).css("width"));
+    if (30 <= newPxSize && newPxSize < 100) {
+      newPxSize += 10;
+      newPxSize = newPxSize + "" + "px";
+      $("#" + iconElement[0].id).css("width", newPxSize);
+    };
+  }
+
+  function smallerElement () {
+    newPxSize = parseInt($("#" + iconElement[0].id).css("width"));
+    if (30 < newPxSize && newPxSize <= 100) {
+      newPxSize -= 10;
+      newPxSize = newPxSize + "" + "px";
+      $("#" + iconElement[0].id).css("width", newPxSize);
+    };
+  }
+
+  // Button Click Listeners
+
+  // To added and subtract amount of circles in play
+  // logs variable for amount of circles shown
 
   $("#addCircle").on("click", function () {
     if (circleCount < 9 && gameRunning === false) {
@@ -102,7 +138,9 @@ $(document).ready(function () {
     };
   });
 
-// Logging mouse over data for the timer and icons as a variable
+  // Hover Listeners
+
+  // Logging mouse over data for the timer and icons as a variable
 
   $('#myStopWatch').on('mouseover', function(e) {
     timerElement = $(e.currentTarget);
@@ -120,60 +158,28 @@ $(document).ready(function () {
     iconElement = null;
   });
 
-// gives the draggable functionality
+  // Gives the draggable functionality
   
-  var bindDrag = function () {
+  function bindDrag () {
     $(".draggable").draggable({ disabled: false });
   }
 
-  var unbindDrag = function () {
+  function unbindDrag () {
     $(".draggable").draggable({ disabled: true });
   }
 
-  bindDrag();
+  // Timer
 
-  var completedGame = function () {
-    stopTimer();
-    console.log(min + ":" + sec + ":" + miliSec);
-    gameRunning = false;
-    bindDrag();
-    resetCircles();
-    resetTimer();
-  }
-
-  var resetCircles = function () {
-    for (var i = touchCount; i > 0; i--) {
-        $("#icon" + i).removeClass('zoomOut');
-      };
-    touchCount = 0;
-  }
-
-// Timer
+  // Functions:
+  // startTimer
+  // stopTimer
+  // resetTimer
 
   var miliSec = 0;
   var sec = 0;
   var min = 0;
   var timer = 0;
   var timing = false;
-
-  $(document).keypress(function (event) {
-    // console.log(event.which);
-    switch (event.which) {
-      case 13:
-        startTimer();
-        break;
-      case 92:
-        resetTimer();
-        break;
-      default:
-        break;
-    }
-  });
-
-  function stopTimer () {
-    timing = false;
-    clearInterval(timer);
-  };
 
   function startTimer () {
     if (!timing) {
@@ -198,16 +204,6 @@ $(document).ready(function () {
     printTime();
   };
 
-  function resetTimer () {
-    if (timing) {
-      stopTimer();
-    };
-    miliSec = 0;
-    sec = 0;
-    min = 0;
-    printTime();
-  };
-
   function printTime () {
     $(".min").text(pad(min));
     $(".sec").text(pad(sec));
@@ -218,5 +214,20 @@ $(document).ready(function () {
     var newNum = num.toString();
     while (newNum.length < 2) newNum = "0" + newNum;
     return newNum;
+  };
+
+  function resetTimer () {
+    if (timing) {
+      stopTimer();
+    };
+    miliSec = 0;
+    sec = 0;
+    min = 0;
+    printTime();
+  };
+
+  function stopTimer () {
+    timing = false;
+    clearInterval(timer);
   };
 });
