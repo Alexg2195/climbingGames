@@ -8,7 +8,7 @@ $(document).ready(function () {
 
   bindDrag();
 
-  // Listening for keypresses
+// Listening for keypresses
 
   $(document).keypress(function (event) {
     // console.log(event.which);
@@ -51,10 +51,33 @@ $(document).ready(function () {
     }
   });
 
+// Sounds
+  var count = new Audio('sound/123.wav');
+  var start = new Audio('sound/go.wav');
+  var hit = new Audio('sound/hit.wav');
+
+  function countDown () {
+    var times = 3;
+    var loop = setInterval(repeatSound, 800);
+
+    function repeatSound () {
+      if (times === 0) {
+        clearInterval(loop);
+        start.play();
+        startTimer();
+      } else {
+        count.play();
+      }
+      times--;
+    }
+  }
+
+// Functions
+
   function startGame () {
-    startTimer();         //Starts Timer
     gameRunning = true;   //Kills most setup Controls
     unbindDrag();         //Kills draggable controls
+    countDown();          //Starts Countdown
   }
 
   function resetGame () {
@@ -65,6 +88,7 @@ $(document).ready(function () {
   }
 
   function pointScored () {
+    hit.play();
     touchCount++;
     $("#icon" + touchCount).addClass('zoomOut');
     if (touchCount === circleCount) {
@@ -119,7 +143,7 @@ $(document).ready(function () {
     };
   }
 
-  // Button Click Listeners
+// Button Click Listeners
 
   // To added and subtract amount of circles in play
   // logs variable for amount of circles shown
@@ -138,7 +162,7 @@ $(document).ready(function () {
     };
   });
 
-  // Hover Listeners
+// Hover Listeners
 
   // Logging mouse over data for the timer and icons as a variable
 
@@ -168,7 +192,7 @@ $(document).ready(function () {
     $(".draggable").draggable({ disabled: true });
   }
 
-  // Timer
+// Timer
 
   // Functions:
   // startTimer
