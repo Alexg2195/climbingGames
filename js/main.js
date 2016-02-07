@@ -3,19 +3,20 @@ $(document).ready(function () {
   var touchCount = 0;
   var timerElement = null;
   var iconElement = null;
+  var gameRunning = false;
 
 // To added and subtract amount of circles in play
 // logs variable for amount of circles shown
 
   $("#addCircle").on("click", function () {
-    if (circleCount < 9) {
+    if (circleCount < 9 && gameRunning === false) {
       circleCount++;
       $("#icon" + circleCount).css("display", "inline-block");
     };
   });
 
   $("#minusCircle").on("click", function () {
-    if (circleCount > 0) {
+    if (circleCount > 0 && gameRunning === false) {
       $("#icon" + circleCount).css("display", "none");
       circleCount--;
     };
@@ -47,9 +48,26 @@ $(document).ready(function () {
   $(document).keypress(function(e) {
     // console.log(e.which);
 
+// 13 = ENTER. Sets gameRunning variable to allow controls or not
+
+    if (e.which === 13) {
+      if (gameRunning === false) {
+        gameRunning = true;
+      } else {
+        gameRunning = false;
+      }
+    };
+
+// 92 = \ key. Will turn gameRunning variable off to stop game controls
+
+    if (e.which === 92) {
+      gameRunning = false;
+      
+    };
+
 // Space bar takes away the circles as the player climbs
 
-    if (e.which === 32) {
+    if (e.which === 32 && gameRunning === true) {
       touchCount++;
       $("#icon" + touchCount).addClass('zoomOut');
     };
@@ -57,7 +75,7 @@ $(document).ready(function () {
 // Sizes are changed by width (for icons) or font-size (for timer)
 // 10 px is the amount of change atm
 
-    if (e.which === 61 && timerElement) {
+    if (e.which === 61 && timerElement && gameRunning === false) {
       var newPxSize = parseInt($(".time").css("font-size"));
       if (30 <= newPxSize && newPxSize < 100) {
         newPxSize += 10;
@@ -66,7 +84,7 @@ $(document).ready(function () {
       };
     }
 
-    if (e.which === 45 && timerElement) {
+    if (e.which === 45 && timerElement && gameRunning === false) {
       var newPxSize = parseInt($(".time").css("font-size"));
       if (30 < newPxSize && newPxSize <= 100) {
         newPxSize -= 10;
@@ -75,7 +93,7 @@ $(document).ready(function () {
       };
     }
 
-    if (e.which === 61 && iconElement) {
+    if (e.which === 61 && iconElement && gameRunning === false) {
       var newPxSize = parseInt($("#" + iconElement[0].id).css("width"));
       if (30 <= newPxSize && newPxSize < 100) {
         newPxSize += 10;
@@ -84,7 +102,7 @@ $(document).ready(function () {
       };
     }
 
-    if (e.which === 45 && iconElement) {
+    if (e.which === 45 && iconElement && gameRunning === false) {
       var newPxSize = parseInt($("#" + iconElement[0].id).css("width"));
       if (30 < newPxSize && newPxSize <= 100) {
         newPxSize -= 10;
@@ -93,14 +111,6 @@ $(document).ready(function () {
       };
     }
   });
-
-  var bindSetupControls function () {
-    
-  }
-
-  var bindGameControls function() {
-    
-  }
 
 // gives the draggable functionality
 
