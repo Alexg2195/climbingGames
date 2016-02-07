@@ -32,6 +32,7 @@ $(document).ready(function () {
     if (e.which === 92) {
       gameRunning = false;
       bindDrag();
+      resetCircles();
     };
 
 // Space bar takes away the circles as the player climbs
@@ -40,7 +41,7 @@ $(document).ready(function () {
       touchCount++;
       $("#icon" + touchCount).addClass('zoomOut');
       if (touchCount === circleCount) {
-        startStop();
+        completedGame();
       };
     };
 
@@ -131,6 +132,22 @@ $(document).ready(function () {
 
   bindDrag();
 
+  var completedGame = function () {
+    stopTimer();
+    console.log(min + ":" + sec + ":" + miliSec);
+    gameRunning = false;
+    bindDrag();
+    resetCircles();
+    resetTimer();
+  }
+
+  var resetCircles = function () {
+    for (var i = touchCount; i > 0; i--) {
+        $("#icon" + i).removeClass('zoomOut');
+      };
+    touchCount = 0;
+  }
+
 // Timer
 
   var miliSec = 0;
@@ -143,23 +160,15 @@ $(document).ready(function () {
     // console.log(event.which);
     switch (event.which) {
       case 13:
-        startStop();
+        startTimer();
         break;
       case 92:
-        reset();
+        resetTimer();
         break;
       default:
         break;
     }
   });
-
-  function startStop () {
-    if (!timing) {
-      startTimer();
-    } else {
-      stopTimer();
-    };
-  };
 
   function stopTimer () {
     timing = false;
@@ -189,7 +198,7 @@ $(document).ready(function () {
     printTime();
   };
 
-  function reset () {
+  function resetTimer () {
     if (timing) {
       stopTimer();
     };
@@ -199,7 +208,7 @@ $(document).ready(function () {
     printTime();
   };
 
-  function printTime (argument) {
+  function printTime () {
     $(".min").text(pad(min));
     $(".sec").text(pad(sec));
     $(".miliSec").text(pad(miliSec));
