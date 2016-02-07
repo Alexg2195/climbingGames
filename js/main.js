@@ -97,6 +97,7 @@ $(document).ready(function () {
   }
 
   function completedGame () {
+    gameRunning = false;
     stopTimer();
   }
 
