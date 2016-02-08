@@ -55,7 +55,13 @@ $(document).ready(function () {
 // Sounds
   var count = new Audio('sound/123.wav');
   var start = new Audio('sound/go.wav');
-  var hit = new Audio('sound/hit.wav');
+  // var hit = new Audio('sound/hit.wav');
+  var sound = new Howl({
+    urls: ["sound/hit.wav"],
+    sprite: {
+      hit: [0,1000]
+    }
+  });
 
   function countDown () {
     var times = 3;
@@ -90,7 +96,8 @@ $(document).ready(function () {
   }
 
   function pointScored ( ) {
-    hit.play();
+    // hit.play();
+    sound.play("hit");
     touchCount++;
     $("#icon" + touchCount).addClass('zoomOut');
     if (touchCount === circleCount) {
