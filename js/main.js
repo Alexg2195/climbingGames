@@ -85,9 +85,10 @@ $(document).ready(function () {
     gameRunning = false;  //Enables most Setup Controls
     bindDrag();           //Enables draggable controls
     resetCircles();       //Resets Circles
+    showGame();
   }
 
-  function pointScored () {
+  function pointScored ( ) {
     hit.play();
     touchCount++;
     $("#icon" + touchCount).addClass('zoomOut');
@@ -101,7 +102,20 @@ $(document).ready(function () {
     stopTimer();
     addScore();
     showScores();
-    resetGame();
+  }
+
+  function showGame () {
+    $("#myStopWatch").css("display", "inline-block");
+    $("#addCircle").css("display", "inline-block");
+    $("#minusCircle").css("display", "inline-block");
+    $("#leaderboard").css("display", "none");
+  }
+
+  function showLeaderboard () {
+    $("#myStopWatch").css("display", "none");
+    $("#addCircle").css("display", "none");
+    $("#minusCircle").css("display", "none");
+    $("#leaderboard").css("display", "table");
   }
 
   function resetCircles () {
@@ -271,6 +285,11 @@ $(document).ready(function () {
 
   function addScore () {
     playerName = getPlayerName();
+
+    if (playerName === "") {
+      return;
+    }
+
     newScore = {
       "playerName": playerName,
       "minute": min,
@@ -338,6 +357,7 @@ $(document).ready(function () {
 
       $("#leaderboardBody").append(newRow);
     };
+    showLeaderboard();
   }
 
   function buildRow (num, data) {

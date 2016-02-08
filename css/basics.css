@@ -5,6 +5,7 @@ body {
 }
 
 #leaderboard {
+  display: none;
   color: white;
   font-family: 'Wallpoet', cursive;
   font-size: 30px;
