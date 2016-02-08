@@ -100,6 +100,7 @@ $(document).ready(function () {
     gameRunning = false;
     stopTimer();
     addScore();
+    showScores();
     resetGame();
   }
 
@@ -258,6 +259,10 @@ $(document).ready(function () {
 
 // Leaderboard
 
+  // Functions:
+  // addScore
+  // showScores
+
   var leaderBoardSize = 10;
   var scores = [];
   var playerName = "";
@@ -315,6 +320,10 @@ $(document).ready(function () {
 
     scores.splice(insertLocation, 0, newScore);
 
+    if (scores.length > leaderBoardSize) {
+      scores.pop();
+    }
+
     insertLocation = null;
   }
 
@@ -323,10 +332,23 @@ $(document).ready(function () {
   }
 
   function showScores () {
-    console.log(scores);
+    $("#leaderboardBody").empty();
+    for (var i = 0; i < scores.length; i++) {
+      var newRow = buildRow(i, scores[i]);
+
+      $("#leaderboardBody").append(newRow);
+    };
   }
 
-  // addScore();
-  // showScores();
+  function buildRow (num, data) {
+    var row = $("<tr>")
+    var number = $("<td>").append(num + 1 + "");
+    var name = $("<td>").append(data.playerName);
+    var time = $("<td>").append(data.minute + ":" + data.second + ":" + data.miliSecond);
+
+    row.append(number).append(name).append(time);
+
+    return row;
+  }
 
 });
