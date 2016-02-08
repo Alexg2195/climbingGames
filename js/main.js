@@ -4,6 +4,7 @@ $(document).ready(function () {
   var timerElement = null;
   var iconElement = null;
   var gameRunning = false;
+  var showingGame = true;
   var newPxSize = 0;
 
   bindDrag();
@@ -13,21 +14,21 @@ $(document).ready(function () {
   $(document).keypress(function (event) {
     // console.log(event.which);
     switch (event.which) {
-      case 13:                        // ENTER
-        if (gameRunning === false) {
+      case 13: // ENTER
+        if (gameRunning === false && showingGame) {
           startGame();
         };
         break;
-      case 92:                        // \ key
+      case 92: // \ key
         resetGame();
         break;
-      case 32:                        // SPACEBAR
+      case 32: // SPACEBAR
         if (gameRunning === true) {
           pointScored();
         };
         break;
-      case 61:                        // (+=) key
-        if (gameRunning === false) {
+      case 61: // (+=) key
+        if (gameRunning === false && showingGame) {
           if (timerElement) {
             biggerTimer();
           };
@@ -36,8 +37,8 @@ $(document).ready(function () {
           };
         };
         break;
-      case 45:                        // (-_) key
-        if (gameRunning === false) {
+      case 45: // (-_) key
+        if (gameRunning === false && showingGame) {
           if (timerElement) {
             smallerTimer();
           };
@@ -109,6 +110,7 @@ $(document).ready(function () {
     $("#addCircle").css("display", "inline-block");
     $("#minusCircle").css("display", "inline-block");
     $("#leaderboard").css("display", "none");
+    showingGame = true;
   }
 
   function showLeaderboard () {
@@ -116,6 +118,7 @@ $(document).ready(function () {
     $("#addCircle").css("display", "none");
     $("#minusCircle").css("display", "none");
     $("#leaderboard").css("display", "table");
+    showingGame = false;
   }
 
   function resetCircles () {
