@@ -99,6 +99,8 @@ $(document).ready(function () {
   function completedGame () {
     gameRunning = false;
     stopTimer();
+    addScore();
+    resetGame();
   }
 
   function resetCircles () {
@@ -143,6 +145,14 @@ $(document).ready(function () {
       $("#" + iconElement[0].id).css("width", newPxSize);
     };
   }
+  
+  function bindDrag () {
+    $(".draggable").draggable({ disabled: false });
+  }
+
+  function unbindDrag () {
+    $(".draggable").draggable({ disabled: true });
+  }
 
 // Button Click Listeners
 
@@ -182,16 +192,6 @@ $(document).ready(function () {
   $('.icon').on('mouseout', function(e) {
     iconElement = null;
   });
-
-  // Gives the draggable functionality
-  
-  function bindDrag () {
-    $(".draggable").draggable({ disabled: false });
-  }
-
-  function unbindDrag () {
-    $(".draggable").draggable({ disabled: true });
-  }
 
 // Timer
 
@@ -255,4 +255,78 @@ $(document).ready(function () {
     timing = false;
     clearInterval(timer);
   };
+
+// Leaderboard
+
+  var leaderBoardSize = 10;
+  var scores = [];
+  var playerName = "";
+  var newScore = {};
+  var insertLocation = null;
+
+  function addScore () {
+    playerName = getPlayerName();
+    newScore = {
+      "playerName": playerName,
+      "minute": min,
+      "second": sec,
+      "miliSecond": miliSec
+    }
+
+    if (scores.length === 0) {
+      scores.push(newScore);
+      return;
+    }
+
+    for (var i = scores.length - 1; i >= 0; i--) {
+
+      if (scores[i].minute < min) {
+        insertLocation = i + 1;
+        break;
+      }
+
+      if (scores[i].minute > min) {
+        continue;
+      }
+
+      if (scores[i].second < sec) {
+        insertLocation = i + 1;
+        break;
+      }
+
+      if (scores[i].second > sec) {
+        continue;
+      }
+
+      if (scores[i].miliSecond < miliSec) {
+        insertLocation = i + 1;
+        break;
+      }
+
+      if (scores[i].miliSecond > miliSec) {
+        continue;
+      }
+
+    };
+
+    if (insertLocation === null) {
+      insertLocation = 0;
+    }
+
+    scores.splice(insertLocation, 0, newScore);
+
+    insertLocation = null;
+  }
+
+  function getPlayerName () {
+    return(prompt("Name:"));
+  }
+
+  function showScores () {
+    console.log(scores);
+  }
+
+  // addScore();
+  // showScores();
+
 });
