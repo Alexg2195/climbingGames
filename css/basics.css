@@ -1,9 +1,27 @@
+@import 'http://fonts.googleapis.com/css?family=Quantico|Cabin+Condensed|Dosis|Electrolize|Spinnaker|Francois+One|Iceberg|Share|Tulpen+One|Wallpoet';
+
 body {
   background-color: black;
 }
 
 #leaderboard {
   color: white;
+  font-family: 'Wallpoet', cursive;
+  font-size: 30px;
+  width: 100%;
+  text-align: center;
+}
+
+#leaderboard caption {
+  font-size: 60px;
+}
+
+#leaderboard th {
+  border-bottom: 1px solid white;
+}
+
+.numRank {
+  width: 30%;
 }
 
 .edit-icon {
