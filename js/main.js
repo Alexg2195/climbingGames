@@ -344,7 +344,7 @@ $(document).ready(function () {
     var row = $("<tr>")
     var number = $("<td>").append(num + 1 + "");
     var name = $("<td>").append(data.playerName);
-    var time = $("<td>").append(data.minute + ":" + data.second + ":" + data.miliSecond);
+    var time = $("<td>").append(pad(data.minute) + ":" + pad(data.second) + ":" + pad(data.miliSecond));
 
     row.append(number).append(name).append(time);
 
