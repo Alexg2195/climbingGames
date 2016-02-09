@@ -4,6 +4,7 @@
 
 The projector will be faced towards the climbing wall and the setup user will place circles across the wall.
 The player is on a race against the clock to tag all the numbered circles in order.
+Top ten scores will be recored.
 
 ##Controls:
 
@@ -19,4 +20,4 @@ The player is on a race against the clock to tag all the numbered circles in ord
 If no player name is inputed no score will be recorded.
 
 ##P.S.
-This is a work in progress and was not an original idea but an attempt to make a better program, incorrporate more games, and also keep it free. As a past climbing coach I understand how valuble something like this is to keep syke high and to mix is up with fun activities within the whole climbing community.
+This is a work in progress and was not an original idea but an attempt to make a better program, incorporate more games, and also keep it free. As a past climbing coach I understand how valuable something like this is to keep syke high and to mix is up with fun activities within the whole climbing community.
