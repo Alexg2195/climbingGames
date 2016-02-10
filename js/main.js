@@ -70,6 +70,7 @@ $(document).ready(function () {
     function repeatSound () {
       if (times === 0) {
         clearInterval(loop);
+        gameRunning = true;   //Kills most setup Controls
         start.play();
         startTimer();
       } else {
@@ -82,7 +83,6 @@ $(document).ready(function () {
 // Functions
 
   function startGame () {
-    gameRunning = true;   //Kills most setup Controls
     unbindDrag();         //Kills draggable controls
     countDown();          //Starts Countdown
   }
