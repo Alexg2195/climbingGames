@@ -108,8 +108,9 @@ $(document).ready(function () {
   function completedGame () {
     gameRunning = false;
     stopTimer();
-    addScore();
-    showScores();
+    showInputModal();
+    // addScore();
+    // showScores();
   }
 
   function showGame () {
@@ -292,6 +293,10 @@ $(document).ready(function () {
   var playerName = "";
   var newScore = {};
   var insertLocation = null;
+
+  function showInputModal () {
+    $("#openModal").css("opacity", 1);
+  }
 
   function addScore () {
     playerName = getPlayerName();
