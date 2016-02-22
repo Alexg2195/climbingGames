@@ -108,9 +108,9 @@ $(document).ready(function () {
   function completedGame () {
     gameRunning = false;
     stopTimer();
-    showInputModal();
-    // addScore();
-    // showScores();
+    // showInputModal();
+    addScore();
+    showScores();
   }
 
   function showGame () {
@@ -171,7 +171,7 @@ $(document).ready(function () {
       $("#" + iconElement[0].id).css("width", newPxSize);
     };
   }
-  
+
   function bindDrag () {
     $(".draggable").draggable({ disabled: false });
   }
@@ -288,7 +288,7 @@ $(document).ready(function () {
   // addScore
   // showScores
 
-  var leaderBoardSize = 10;
+  var leaderBoardSize = 20;
   var scores = [];
   var playerName = "";
   var newScore = {};
