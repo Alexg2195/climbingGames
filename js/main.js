@@ -318,6 +318,22 @@ $(document).ready(function () {
     }
 
     for (var i = scores.length - 1; i >= 0; i--) {
+      console.log("we got here");
+      console.log(scores[i].playerName);
+      console.log(playerName);
+      if (scores[i].playerName === playerName) {
+        if (scores[i].minute > min) {
+          if (scores[i].second > sec) {
+            if (scores[i].miliSecond > miliSec) {
+              console.log("we got here now");
+              scores.splice(i, 1);
+            }
+          }
+        }
+      }
+    }
+
+    for (var i = scores.length - 1; i >= 0; i--) {
 
       if (scores[i].minute < min) {
         insertLocation = i + 1;
