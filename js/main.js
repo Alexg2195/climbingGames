@@ -317,16 +317,21 @@ $(document).ready(function () {
       return;
     }
 
+    console.log(scores);
+
     for (var i = scores.length - 1; i >= 0; i--) {
-      console.log("we got here");
-      console.log(scores[i].playerName);
-      console.log(playerName);
       if (scores[i].playerName === playerName) {
-        if (scores[i].minute > min) {
-          if (scores[i].second > sec) {
-            if (scores[i].miliSecond > miliSec) {
-              console.log("we got here now");
-              scores.splice(i, 1);
+        if (scores[i].minute >= min) {
+          if (scores[i].second >= sec) {
+            if (scores[i].miliSecond >= miliSec) {
+              delete scores[i];
+              var pastScoreList = scores;
+              scores = [];
+              for (var i = 0; i <= pastScoreList.length; i++) {
+                if (pastScoreList[i]) {
+                  scores.push(pastScoreList[i]);
+                }
+              }
             }
           }
         }
