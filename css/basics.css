@@ -10,6 +10,27 @@ body {
   background-color: #000000;
 }
 
+#inputScreen {
+  display: none;
+}
+
+.form-control {
+  height: 45px;
+  font-size: 25px;
+  color: white;
+  background-color: black;
+  border: 2px, solid, white;
+}
+
+.btn-default {
+  color: white;
+  background-color: black;
+}
+
+.btn {
+  font-size: 23px;
+}
+
 #leaderboard {
   display: none;
   color: white;
