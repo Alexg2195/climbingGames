@@ -10,6 +10,10 @@ body {
   background-color: #000000;
 }
 
+.container {
+  padding-top :40px;
+}
+
 #inputScreen {
   display: none;
 }
@@ -42,10 +46,12 @@ body {
 
 #leaderboard caption {
   font-size: 60px;
+  text-align: center;
 }
 
 #leaderboard th {
   border-bottom: 1px solid white;
+  text-align: center;
 }
 
 .numRank {
