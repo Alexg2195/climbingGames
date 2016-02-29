@@ -54,7 +54,14 @@ $(document).ready(function () {
     }
   });
 
+// Modal buttons
+
+  function modalSaveScore () {
+    addScore($("#newPlayerName").html);
+  }
+
 // Sounds
+
   var count = new Audio('sound/123.wav');
   var start = new Audio('sound/go.wav');
   // var hit = new Audio('sound/hit.wav');
@@ -107,7 +114,7 @@ $(document).ready(function () {
     showGame();
   }
 
-  function pointScored ( ) {
+  function pointScored () {
     // hit.play();
     sound.play("hit");
     touchCount++;
@@ -121,8 +128,6 @@ $(document).ready(function () {
     gameRunning = false;
     stopTimer();
     showInputModal();
-    // addScore();
-    // showScores();
   }
 
   function showGame () {
@@ -313,11 +318,11 @@ $(document).ready(function () {
   var addNewScore = true;
 
   function showInputModal () {
-    $('#inputScoreModal').modal('toggle');
+    $("#modalScore").text(pad(min) + ":" + pad(sec) + ":" + pad(miliSec));
+    $('#inputScoreModal').modal();
   }
 
-  function addScore () {
-    playerName = getPlayerName();
+  function addScore (playerName) {
 
     if (playerName === "") {
       return;
@@ -391,6 +396,7 @@ $(document).ready(function () {
 
     insertLocation = null;
     addNewScore = true;
+    showScores();
   }
 
   function getPlayerName () {
