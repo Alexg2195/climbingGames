@@ -6,6 +6,7 @@ $(document).ready(function () {
   var gameRunning = false;
   var showingGame = true;
   var newPxSize = 0;
+  var countDownTimer = true;
 
   bindDrag();
 
@@ -66,17 +67,24 @@ $(document).ready(function () {
   function countDown () {
     var times = 3;
     var loop = setInterval(repeatSound, 800);
+    countDownTimer = true;
 
     function repeatSound () {
-      if (times === 0) {
-        clearInterval(loop);
-        gameRunning = true;   //Kills most setup Controls
-        start.play();
-        startTimer();
+      if (countDownTimer) {
+        if (times === 0) {
+          $(".miliSec").text("GO");
+          clearInterval(loop);
+          gameRunning = true;   //Kills most setup Controls
+          start.play();
+          startTimer();
+        } else {
+          $(".miliSec").text(pad(times));
+          count.play();
+        }
+        times--;
       } else {
-        count.play();
+        clearInterval(loop);
       }
-      times--;
     }
   }
 
@@ -88,6 +96,7 @@ $(document).ready(function () {
   }
 
   function resetGame () {
+    resetCountdown();     //Stops Countdown
     resetTimer();         //Resets Timer
     gameRunning = false;  //Enables most Setup Controls
     bindDrag();           //Enables draggable controls
@@ -134,6 +143,10 @@ $(document).ready(function () {
         $("#icon" + i).removeClass('zoomOut');
       };
     touchCount = 0;
+  }
+
+  function resetCountdown () {
+    countDownTimer = false;
   }
 
   function biggerTimer () {
