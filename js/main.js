@@ -291,8 +291,9 @@ $(document).ready(function () {
   var leaderBoardSize = 20;
   var scores = [];
   var playerName = "";
-  var newScore = {};
+  var newScore = [];
   var insertLocation = null;
+  var addNewScore = true;
 
   function showInputModal () {
     $("#openModal").css("opacity", 1);
@@ -305,60 +306,74 @@ $(document).ready(function () {
       return;
     }
 
-    newScore = {
-      "playerName": playerName,
-      "minute": min,
-      "second": sec,
-      "miliSecond": miliSec
-    }
+    newScore = [playerName, min, sec, miliSec];
 
     if (scores.length === 0) {
       scores.push(newScore);
       return;
     }
 
+    console.log(scores);
+
     for (var i = scores.length - 1; i >= 0; i--) {
-
-      if (scores[i].minute < min) {
-        insertLocation = i + 1;
-        break;
+      if (scores[i][0] === playerName) {
+        addNewScore = false;
+        if (scores[i][1] >= min) {
+          if (scores[i][2] >= sec) {
+            if (scores[i][3] >= miliSec) {
+              scores.splice(i, 1);
+              addNewScore = true;
+            }
+          }
+        }
       }
-
-      if (scores[i].minute > min) {
-        continue;
-      }
-
-      if (scores[i].second < sec) {
-        insertLocation = i + 1;
-        break;
-      }
-
-      if (scores[i].second > sec) {
-        continue;
-      }
-
-      if (scores[i].miliSecond < miliSec) {
-        insertLocation = i + 1;
-        break;
-      }
-
-      if (scores[i].miliSecond > miliSec) {
-        continue;
-      }
-
-    };
-
-    if (insertLocation === null) {
-      insertLocation = 0;
     }
 
-    scores.splice(insertLocation, 0, newScore);
+    if (addNewScore) {
+      for (var i = scores.length - 1; i >= 0; i--) {
 
-    if (scores.length > leaderBoardSize) {
-      scores.pop();
+        if (scores[i][1] < min) {
+          insertLocation = i + 1;
+          break;
+        }
+
+        if (scores[i][1] > min) {
+          continue;
+        }
+
+        if (scores[i][2] < sec) {
+          insertLocation = i + 1;
+          break;
+        }
+
+        if (scores[i][2] > sec) {
+          continue;
+        }
+
+        if (scores[i][3] < miliSec) {
+          insertLocation = i + 1;
+          break;
+        }
+
+        if (scores[i][3] > miliSec) {
+          continue;
+        }
+
+      };
+
+      if (insertLocation === null) {
+        insertLocation = 0;
+      }
+
+      scores.splice(insertLocation, 0, newScore);
+
+      if (scores.length > leaderBoardSize) {
+        scores.pop();
+      }
     }
 
     insertLocation = null;
+    addNewScore = true;
   }
 
   function getPlayerName () {
@@ -378,8 +393,8 @@ $(document).ready(function () {
   function buildRow (num, data) {
     var row = $("<tr>")
     var number = $("<td>").append(num + 1 + "");
-    var name = $("<td>").append(data.playerName);
-    var time = $("<td>").append(pad(data.minute) + ":" + pad(data.second) + ":" + pad(data.miliSecond));
+    var name = $("<td>").append(data[0]);
+    var time = $("<td>").append(pad(data[1]) + ":" + pad(data[2]) + ":" + pad(data[3]));
 
     row.append(number).append(name).append(time);
 
