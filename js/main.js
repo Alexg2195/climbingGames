@@ -7,6 +7,7 @@ $(document).ready(function () {
   var showingGame = true;
   var newPxSize = 0;
   var countDownTimer = true;
+  var countDownRunning = false;
 
   bindDrag();
 
@@ -16,7 +17,7 @@ $(document).ready(function () {
     // console.log(event.which);
     switch (event.which) {
       case 13: // ENTER
-        if (gameRunning === false && showingGame) {
+        if (gameRunning === false && showingGame && countDownRunning === false) {
           startGame();
         };
         break;
@@ -65,6 +66,7 @@ $(document).ready(function () {
   });
 
   function countDown () {
+    countDownRunning = true;
     var times = 3;
     var loop = setInterval(repeatSound, 800);
     countDownTimer = true;
@@ -75,6 +77,7 @@ $(document).ready(function () {
           $(".miliSec").text("GO");
           clearInterval(loop);
           gameRunning = true;   //Kills most setup Controls
+          countDownRunning = false;
           start.play();
           startTimer();
         } else {
@@ -117,9 +120,9 @@ $(document).ready(function () {
   function completedGame () {
     gameRunning = false;
     stopTimer();
-    // showInputModal();
-    addScore();
-    showScores();
+    showInputModal();
+    // addScore();
+    // showScores();
   }
 
   function showGame () {
@@ -147,6 +150,7 @@ $(document).ready(function () {
 
   function resetCountdown () {
     countDownTimer = false;
+    countDownRunning = false;
   }
 
   function biggerTimer () {
@@ -309,7 +313,7 @@ $(document).ready(function () {
   var addNewScore = true;
 
   function showInputModal () {
-    $("#openModal").css("opacity", 1);
+    $('#inputScoreModal').modal('toggle');
   }
 
   function addScore () {

@@ -12,6 +12,7 @@
 </head>
 <body>
 
+  <!-- stopwatch -->
   <div id="myStopWatch" class="draggable">
     <div class="time">
       <span class="min">00</span>
@@ -20,6 +21,7 @@
     </div>
   </div>
 
+  <!-- game icons -->
   <img src="icons/plus.svg" id="addCircle" class="edit-icon">
   <img src="icons/minus.svg" id="minusCircle" class="edit-icon">
   <img src="icons/number1.svg" id="icon1" class="icon draggable animated">
@@ -32,13 +34,16 @@
   <img src="icons/number8.svg" id="icon8" class="icon draggable animated">
   <img src="icons/number9.svg" id="icon9" class="icon draggable animated">
 
-  <div id="openModal" class="modalDialog">
-    <div>
-      <a href="#close" class="close">X</a>
-      <input type="text" name="newPlayer" value="">
+  <!-- Large modal -->
+  <div id="inputScoreModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        ...
+      </div>
     </div>
   </div>
 
+  <!-- leaderboard -->
   <table id="leaderboard" class="table">
     <caption>Leaderboard</caption>
     <thead>
