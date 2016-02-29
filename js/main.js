@@ -101,8 +101,18 @@ $(document).ready(function () {
   $("#inputNameBtn").on("click", function () {
     var name = $('#inputNameField').val();
     $('#inputNameField').val("");
-    addScore(name);
+    name = name.toLowerCase();
+    addScore(ucFirstAllWords(name));
   });
+
+  function ucFirstAllWords (str) {
+    var pieces = str.split(" ");
+    for ( var i = 0; i < pieces.length; i++ ) {
+      var j = pieces[i].charAt(0).toUpperCase();
+      pieces[i] = j + pieces[i].substr(1);
+    }
+    return pieces.join(" ");
+  }
 
   function changeDisplay () {
     if (gameState === 1) {
@@ -430,37 +440,3 @@ $(document).ready(function () {
   }
 
 });
-
-
-
-
-
-
-// ---------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
