@@ -293,6 +293,7 @@ $(document).ready(function () {
   var playerName = "";
   var newScore = [];
   var insertLocation = null;
+  var addNewScore = true;
 
   function showInputModal () {
     $("#openModal").css("opacity", 1);
@@ -316,58 +317,63 @@ $(document).ready(function () {
 
     for (var i = scores.length - 1; i >= 0; i--) {
       if (scores[i][0] === playerName) {
+        addNewScore = false;
         if (scores[i][1] >= min) {
           if (scores[i][2] >= sec) {
             if (scores[i][3] >= miliSec) {
               scores.splice(i, 1);
+              addNewScore = true;
             }
           }
         }
       }
     }
 
-    for (var i = scores.length - 1; i >= 0; i--) {
+    if (addNewScore) {
+      for (var i = scores.length - 1; i >= 0; i--) {
 
-      if (scores[i][1] < min) {
-        insertLocation = i + 1;
-        break;
+        if (scores[i][1] < min) {
+          insertLocation = i + 1;
+          break;
+        }
+
+        if (scores[i][1] > min) {
+          continue;
+        }
+
+        if (scores[i][2] < sec) {
+          insertLocation = i + 1;
+          break;
+        }
+
+        if (scores[i][2] > sec) {
+          continue;
+        }
+
+        if (scores[i][3] < miliSec) {
+          insertLocation = i + 1;
+          break;
+        }
+
+        if (scores[i][3] > miliSec) {
+          continue;
+        }
+
+      };
+
+      if (insertLocation === null) {
+        insertLocation = 0;
       }
 
-      if (scores[i][1] > min) {
-        continue;
+      scores.splice(insertLocation, 0, newScore);
+
+      if (scores.length > leaderBoardSize) {
+        scores.pop();
       }
-
-      if (scores[i][2] < sec) {
-        insertLocation = i + 1;
-        break;
-      }
-
-      if (scores[i][2] > sec) {
-        continue;
-      }
-
-      if (scores[i][3] < miliSec) {
-        insertLocation = i + 1;
-        break;
-      }
-
-      if (scores[i][3] > miliSec) {
-        continue;
-      }
-
-    };
-
-    if (insertLocation === null) {
-      insertLocation = 0;
-    }
-
-    scores.splice(insertLocation, 0, newScore);
-
-    if (scores.length > leaderBoardSize) {
-      scores.pop();
     }
 
     insertLocation = null;
+    addNewScore = true;
   }
 
   function getPlayerName () {
