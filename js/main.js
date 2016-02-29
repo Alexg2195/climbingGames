@@ -14,6 +14,7 @@ $(document).ready(function () {
   // gameState 5 = scoreboard showing
 
   bindDrag();
+  changeDisplay();
 
 
 // Listening for keypresses
@@ -114,18 +115,45 @@ $(document).ready(function () {
     return pieces.join(" ");
   }
 
+  function showPastPlayers () {
+    $("#pastPlayers").empty();
+    for (var i = 0; i < scores.length; i++) {
+      var newRow = buildCard(scores[i]);
+
+      $("#pastPlayers").append(newRow);
+    };
+  }
+
+  function buildCard (data) {
+    var newCol = $("<div>").addClass("col-md-4");
+    var newCard = $("<div>").addClass("card card-block");
+    var newTitle = $("<h3>").addClass("card-title").append(data[0]);
+    var newCenterDiv = $("<div>").addClass("centered");
+    var newBtn = $("<a>").addClass("btn btn-primary").append("Thats Me!");
+
+    newBtn.appendTo(newCenterDiv);
+    newTitle.appendTo(newCard);
+    newCenterDiv.appendTo(newCard);
+    newCard.appendTo(newCol);
+
+    return newCol;
+  }
+
   function changeDisplay () {
     if (gameState === 1) {
+      $("#icon1").css("display", "inline-block");
       $("#myStopWatch").css("display", "inline-block");
       $("#addCircle").css("display", "inline-block");
       $("#minusCircle").css("display", "inline-block");
     } else {
+      $("#icon1").css("display", "none");
       $("#myStopWatch").css("display", "none");
       $("#addCircle").css("display", "none");
       $("#minusCircle").css("display", "none");
     }
 
     if (gameState === 4) {
+      showPastPlayers();
       $("#inputScreen").css("display", "block");
       $("#inputNameField").focus();
     } else {
@@ -352,8 +380,6 @@ $(document).ready(function () {
       showScores();
       return;
     }
-
-    console.log(scores);
 
     for (var i = scores.length - 1; i >= 0; i--) {
       if (scores[i][0] === playerName) {

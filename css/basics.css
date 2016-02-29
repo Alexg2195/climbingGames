@@ -14,10 +14,6 @@ body {
   padding-top :40px;
 }
 
-#inputScreen {
-  display: none;
-}
-
 .form-control {
   height: 45px;
   font-size: 25px;
@@ -35,8 +31,22 @@ body {
   font-size: 23px;
 }
 
+.card-title {
+  text-align: center;
+  font-size: 30px;
+  color: white;
+}
+
+.card {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.centered {
+  text-align: center;
+}
+
 #leaderboard {
-  display: none;
   color: white;
   font-family: 'Wallpoet', cursive;
   font-size: 30px;
@@ -72,7 +82,7 @@ body {
 
 #icon1 {
   left: 100px;
-  display: inline-block;
+  display: none;
 }
 
 #icon2 {
