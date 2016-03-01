@@ -5,7 +5,7 @@ $(document).ready(function () {
   var iconElement = null;
   var newPxSize = 0;
 
-  var gameState = 1;
+  var gameState = 0;
   // gameState 0 = intro instruction page ***future***
   // gameState 1 = user input game setup
   // gameState 2 = countdown timer running
@@ -62,6 +62,11 @@ $(document).ready(function () {
 
 
 // Functions
+
+  $("#playGame").on("click", function (event) {
+    gameState = 1;
+    changeDisplay();
+  });
 
   function startGame () {
     gameState = 2;
@@ -153,6 +158,12 @@ $(document).ready(function () {
   }
 
   function changeDisplay () {
+    if (gameState === 0) {
+      $("#howToPlay").css("display", "block");
+    } else {
+      $("#howToPlay").css("display", "none");
+    }
+
     if (gameState === 1) {
       $("#icon1").css("display", "inline-block");
       $("#myStopWatch").css("display", "inline-block");

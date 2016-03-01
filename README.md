@@ -8,7 +8,7 @@ Top ten scores will be recored.
 
 ##Controls:
 
-* Drag - User can click and drag timer and circle elements to posistion them best.
+* Drag - User can click and drag timer and circle elements to position them best.
 * On Screen "+" - Will add another circle to the game.
 * On Screen "-" - Will remove a circle from the game.
 * ENTER key - Starts countdown and initializes the game.
