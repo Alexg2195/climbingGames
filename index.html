@@ -2,13 +2,20 @@
 <html>
 <head>
   <title>Climbing Games</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/basics.css">
   <link rel="stylesheet" type="text/css" href="css/animation.css">
   <link rel="stylesheet" type="text/css" href="css/stopWatch.css">
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
+  <!-- for offline testing only -->
+  <!-- <link rel="stylesheet" href="offline/jqueryUi.css"> -->
+  <!-- <link rel="stylesheet" href="offline/bootstrapMin.css"> -->
 </head>
 <body>
 
+  <!-- stopwatch -->
   <div id="myStopWatch" class="draggable">
     <div class="time">
       <span class="min">00</span>
@@ -17,6 +24,7 @@
     </div>
   </div>
 
+  <!-- game icons -->
   <img src="icons/plus.svg" id="addCircle" class="edit-icon">
   <img src="icons/minus.svg" id="minusCircle" class="edit-icon">
   <img src="icons/number1.svg" id="icon1" class="icon draggable animated">
@@ -29,26 +37,43 @@
   <img src="icons/number8.svg" id="icon8" class="icon draggable animated">
   <img src="icons/number9.svg" id="icon9" class="icon draggable animated">
 
-  <div id="openModal" class="modalDialog">
-    <div>
-      <a href="#close" class="close">X</a>
-      <input type="text" name="newPlayer" value="">
+  <!-- Player Name input -->
+  <div id="inputScreen" class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="input-group">
+          <input id="inputNameField" type="text" class="form-control" placeholder="Player Name...">
+          <span class="input-group-btn">
+            <button id="inputNameBtn" class="btn btn-default" type="button">Go!</button>
+          </span>
+        </div>
+      </div>
+      <div id="pastPlayers">
+
+      </div>
     </div>
   </div>
 
-  <table id="leaderboard" class="table">
-    <caption>Leaderboard</caption>
-    <thead>
-      <tr>
-        <th class="numRank">Rank</th>
-        <th>Name</th>
-        <th>Time</th>
-      </tr>
-    </thead>
-    <tbody id="leaderboardBody">
-    </tbody>
-  </table>
+  <!-- leaderboard -->
+  <div class="table-responsive">
+    <table id="leaderboard" class="table">
+      <caption>Leaderboard</caption>
+      <thead>
+        <tr>
+          <th class="numRank">Rank</th>
+          <th>Name</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboardBody">
+      </tbody>
+    </table>
+  </div>
 
+
+  <!-- for offline testing only -->
+  <!-- <script src="offline/jqueryMin.js" type="text/javascript"></script> -->
+  <!-- <script src="offline/jqueryUi.js"></script> -->
 
   <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

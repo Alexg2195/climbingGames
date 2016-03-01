@@ -3,11 +3,19 @@ $(document).ready(function () {
   var touchCount = 0;
   var timerElement = null;
   var iconElement = null;
-  var gameRunning = false;
-  var showingGame = true;
   var newPxSize = 0;
 
+  var gameState = 1;
+  // gameState 0 = intro instruction page ***future***
+  // gameState 1 = user input game setup
+  // gameState 2 = countdown timer running
+  // gameState 3 = game running
+  // gameState 4 = name input
+  // gameState 5 = scoreboard showing
+
   bindDrag();
+  changeDisplay();
+
 
 // Listening for keypresses
 
@@ -15,118 +23,73 @@ $(document).ready(function () {
     // console.log(event.which);
     switch (event.which) {
       case 13: // ENTER
-        if (gameRunning === false && showingGame) {
+        if (gameState === 1) {
           startGame();
-        };
+        }
         break;
       case 92: // \ key
         resetGame();
         break;
       case 32: // SPACEBAR
-        if (gameRunning === true) {
+        if (gameState === 3) {
           pointScored();
-        };
+        }
         break;
       case 61: // (+=) key
-        if (gameRunning === false && showingGame) {
+        if (gameState === 1) {
           if (timerElement) {
             biggerTimer();
-          };
+          }
           if (iconElement) {
             biggerElement();
-          };
-        };
+          }
+        }
         break;
       case 45: // (-_) key
-        if (gameRunning === false && showingGame) {
+        if (gameState === 1) {
           if (timerElement) {
             smallerTimer();
-          };
+          }
           if (iconElement) {
             smallerElement();
-          };
-        };
+          }
+        }
         break;
       default:
         break;
     }
   });
 
-// Sounds
-  var count = new Audio('sound/123.wav');
-  var start = new Audio('sound/go.wav');
-  // var hit = new Audio('sound/hit.wav');
-  var sound = new Howl({
-    urls: ["sound/hit.wav"],
-    sprite: {
-      hit: [0,1000]
-    }
-  });
-
-  function countDown () {
-    var times = 3;
-    var loop = setInterval(repeatSound, 800);
-
-    function repeatSound () {
-      if (times === 0) {
-        clearInterval(loop);
-        gameRunning = true;   //Kills most setup Controls
-        start.play();
-        startTimer();
-      } else {
-        count.play();
-      }
-      times--;
-    }
-  }
 
 // Functions
 
   function startGame () {
+    gameState = 2;
     unbindDrag();         //Kills draggable controls
     countDown();          //Starts Countdown
   }
 
   function resetGame () {
+    gameState = 1;
     resetTimer();         //Resets Timer
-    gameRunning = false;  //Enables most Setup Controls
     bindDrag();           //Enables draggable controls
     resetCircles();       //Resets Circles
-    showGame();
+    changeDisplay();
   }
 
-  function pointScored ( ) {
-    // hit.play();
+  function pointScored () {
     sound.play("hit");
     touchCount++;
     $("#icon" + touchCount).addClass('zoomOut');
     if (touchCount === circleCount) {
       completedGame();
-    };
+    }
   }
 
   function completedGame () {
-    gameRunning = false;
+    gameState = 4;              //changed game state to name input
     stopTimer();
-    // showInputModal();
-    addScore();
-    showScores();
-  }
-
-  function showGame () {
-    $("#myStopWatch").css("display", "inline-block");
-    $("#addCircle").css("display", "inline-block");
-    $("#minusCircle").css("display", "inline-block");
-    $("#leaderboard").css("display", "none");
-    showingGame = true;
-  }
-
-  function showLeaderboard () {
-    $("#myStopWatch").css("display", "none");
-    $("#addCircle").css("display", "none");
-    $("#minusCircle").css("display", "none");
-    $("#leaderboard").css("display", "table");
-    showingGame = false;
+    changeDisplay();
   }
 
   function resetCircles () {
@@ -135,6 +98,139 @@ $(document).ready(function () {
       };
     touchCount = 0;
   }
+
+  $("#inputNameBtn").on("click", function () {
+    var name = $('#inputNameField').val();
+    $('#inputNameField').val("");
+    addScore(nameFixing(name));
+  });
+
+  function ucFirstAllWords (str) {
+    var pieces = str.split(" ");
+    for ( var i = 0; i < pieces.length; i++ ) {
+      var j = pieces[i].charAt(0).toUpperCase();
+      pieces[i] = j + pieces[i].substr(1);
+    }
+    return pieces.join(" ");
+  }
+
+  function showPastPlayers () {
+    $("#pastPlayers").empty();
+    for (var i = 0; i < scores.length; i++) {
+      var newRow = buildCard(scores[i]);
+
+      $("#pastPlayers").append(newRow);
+    };
+  }
+
+  function buildCard (data) {
+    var newCol = $("<div>").addClass("col-md-4");
+    var newCard = $("<div>").addClass("card card-block");
+    var newTitle = $("<h3>").addClass("card-title").append(data[0]);
+    var newCenterDiv = $("<div>").addClass("centered");
+    var newBtn = $("<a>").addClass("btn btn-primary useThisName").append("Thats Me!").data('playerName', data[0]);
+
+    newBtn.appendTo(newCenterDiv);
+    newTitle.appendTo(newCard);
+    newCenterDiv.appendTo(newCard);
+    newCard.appendTo(newCol);
+
+    return newCol;
+  }
+
+  $("#pastPlayers").on("click", ".useThisName", function (event) {
+    var elementClicked = $(event.target);
+    var useName = elementClicked.data("playerName");
+    addScore(nameFixing(useName));
+  });
+
+  function nameFixing (nameToBeFixed) {
+    var betterNameInput = nameToBeFixed;
+    betterNameInput = $.trim(betterNameInput);
+    betterNameInput = betterNameInput.toLowerCase();
+    betterNameInput = ucFirstAllWords(betterNameInput);
+    return betterNameInput;
+  }
+
+  function changeDisplay () {
+    if (gameState === 1) {
+      $("#icon1").css("display", "inline-block");
+      $("#myStopWatch").css("display", "inline-block");
+      $("#addCircle").css("display", "inline-block");
+      $("#minusCircle").css("display", "inline-block");
+    } else {
+      $("#icon1").css("display", "none");
+      $("#myStopWatch").css("display", "none");
+      $("#addCircle").css("display", "none");
+      $("#minusCircle").css("display", "none");
+    }
+
+    if (gameState === 4) {
+      if (scores) {
+        showPastPlayers();
+      }
+      $('#inputNameField').val("");
+      $("#inputScreen").css("display", "block");
+      setTimeout("$('#inputNameField').focus();", 500);
+    } else {
+      $("#inputScreen").css("display", "none");
+    }
+
+    if (gameState === 5) {
+      $("#leaderboard").css("display", "table");
+    } else {
+      $("#leaderboard").css("display", "none");
+    }
+  }
+
+  function bindDrag () {
+    $(".draggable").draggable({ disabled: false });
+  }
+
+  function unbindDrag () {
+    $(".draggable").draggable({ disabled: true });
+  }
+
+  // Button Click Listeners
+
+  // To added and subtract amount of circles in play
+  // logs variable for amount of circles shown
+
+  $("#addCircle").on("click", function () {
+    if (circleCount < 9 && gameState === 1) {
+      circleCount++;
+      $("#icon" + circleCount).css("display", "inline-block");
+    };
+  });
+
+  $("#minusCircle").on("click", function () {
+    if (circleCount > 1 && gameState === 1) {
+      $("#icon" + circleCount).css("display", "none");
+      circleCount--;
+    };
+  });
+
+  // Hover Listeners
+
+  // Logging mouse over data for the timer and icons as a variable
+
+  $('#myStopWatch').on('mouseover', function(e) {
+    timerElement = $(e.currentTarget);
+  });
+
+  $('#myStopWatch').on('mouseout', function(e) {
+    timerElement = null;
+  });
+
+  $('.icon').on('mouseover', function(e) {
+    iconElement = $(e.currentTarget);
+  });
+
+  $('.icon').on('mouseout', function(e) {
+    iconElement = null;
+  });
+
+  // Change element size functions
 
   function biggerTimer () {
     newPxSize = parseInt($(".time").css("font-size"));
@@ -172,52 +268,42 @@ $(document).ready(function () {
     };
   }
 
-  function bindDrag () {
-    $(".draggable").draggable({ disabled: false });
+
+// Sounds
+
+  var count = new Audio('sound/123.wav');
+  var start = new Audio('sound/go.wav');
+  var sound = new Howl({
+    urls: ["sound/hit.wav"],
+    sprite: {
+      hit: [0,1000]
+    }
+  });
+
+  function countDown () {
+    var times = 3;
+    var loop = setInterval(repeatSound, 800);
+
+    function repeatSound () {
+      if (gameState === 2) {
+        if (times === 0) {
+          $(".miliSec").text("GO");
+          clearInterval(loop);
+          start.play();
+          gameState = 3;                  //Changes game State to game running (3);
+          startTimer();                   //Starts Timer
+        } else {
+          $(".miliSec").text(pad(times));
+          count.play();
+        }
+        times--;
+      } else {
+        clearInterval(loop);
+        $(".miliSec").text("00");
+      }
+    }
   }
 
-  function unbindDrag () {
-    $(".draggable").draggable({ disabled: true });
-  }
-
-// Button Click Listeners
-
-  // To added and subtract amount of circles in play
-  // logs variable for amount of circles shown
-
-  $("#addCircle").on("click", function () {
-    if (circleCount < 9 && gameRunning === false) {
-      circleCount++;
-      $("#icon" + circleCount).css("display", "inline-block");
-    };
-  });
-
-  $("#minusCircle").on("click", function () {
-    if (circleCount > 1 && gameRunning === false) {
-      $("#icon" + circleCount).css("display", "none");
-      circleCount--;
-    };
-  });
-
-// Hover Listeners
-
-  // Logging mouse over data for the timer and icons as a variable
-
-  $('#myStopWatch').on('mouseover', function(e) {
-    timerElement = $(e.currentTarget);
-  });
-
-  $('#myStopWatch').on('mouseout', function(e) {
-    timerElement = null;
-  });
-
-  $('.icon').on('mouseover', function(e) {
-    iconElement = $(e.currentTarget);
-  });
-
-  $('.icon').on('mouseout', function(e) {
-    iconElement = null;
-  });
 
 // Timer
 
@@ -282,6 +368,7 @@ $(document).ready(function () {
     clearInterval(timer);
   };
 
+
 // Leaderboard
 
   // Functions:
@@ -290,19 +377,23 @@ $(document).ready(function () {
 
   var leaderBoardSize = 20;
   var scores = [];
-  var playerName = "";
   var newScore = [];
   var insertLocation = null;
   var addNewScore = true;
 
-  function showInputModal () {
-    $("#openModal").css("opacity", 1);
-  }
+  function addScore (playerName) {
 
-  function addScore () {
-    playerName = getPlayerName();
+    // console.log(playerName);
+    // for (var i = scores.length - 1; i >= 0; i--) {
+    //   if (scores[i][0] === playerName) {
+    //     console.log("Found a matching player");
+    //    } else {
+    //     console.log(scores[i][0] + " and " + playerName + " did not match");
+    //    }
+    // }
 
     if (playerName === "") {
+      showScores();
       return;
     }
 
@@ -310,21 +401,18 @@ $(document).ready(function () {
 
     if (scores.length === 0) {
       scores.push(newScore);
+      showScores();
       return;
     }
-
-    console.log(scores);
 
     for (var i = scores.length - 1; i >= 0; i--) {
       if (scores[i][0] === playerName) {
         addNewScore = false;
-        if (scores[i][1] >= min) {
-          if (scores[i][2] >= sec) {
-            if (scores[i][3] >= miliSec) {
-              scores.splice(i, 1);
-              addNewScore = true;
-            }
-          }
+        var oldTime = (scores[i][1] * 60 * 1000) + (scores[i][2] * 1000) + (scores[i][3] * 10);
+        var newTime = (min * 60 * 1000) + (sec * 1000) + (miliSec * 10);
+        if (oldTime > newTime) {
+          scores.splice(i, 1);
+          addNewScore = true;
         }
       }
     }
@@ -374,10 +462,7 @@ $(document).ready(function () {
 
     insertLocation = null;
     addNewScore = true;
-  }
-
-  function getPlayerName () {
-    return(prompt("Name:"));
+    showScores();
   }
 
   function showScores () {
@@ -387,7 +472,8 @@ $(document).ready(function () {
 
       $("#leaderboardBody").append(newRow);
     };
-    showLeaderboard();
+    gameState = 5;
+    changeDisplay();
   }
 
   function buildRow (num, data) {
