@@ -25,7 +25,7 @@ $(document).ready(function () {
       case 13: // ENTER
         if (gameState === 1) {
           startGame();
-        };
+        }
         break;
       case 92: // \ key
         resetGame();
@@ -33,27 +33,27 @@ $(document).ready(function () {
       case 32: // SPACEBAR
         if (gameState === 3) {
           pointScored();
-        };
+        }
         break;
       case 61: // (+=) key
         if (gameState === 1) {
           if (timerElement) {
             biggerTimer();
-          };
+          }
           if (iconElement) {
             biggerElement();
-          };
-        };
+          }
+        }
         break;
       case 45: // (-_) key
         if (gameState === 1) {
           if (timerElement) {
             smallerTimer();
-          };
+          }
           if (iconElement) {
             smallerElement();
-          };
-        };
+          }
+        }
         break;
       default:
         break;
@@ -83,7 +83,7 @@ $(document).ready(function () {
     $("#icon" + touchCount).addClass('zoomOut');
     if (touchCount === circleCount) {
       completedGame();
-    };
+    }
   }
 
   function completedGame () {
@@ -102,8 +102,7 @@ $(document).ready(function () {
   $("#inputNameBtn").on("click", function () {
     var name = $('#inputNameField').val();
     $('#inputNameField').val("");
-    name = name.toLowerCase();
-    addScore(ucFirstAllWords(name));
+    addScore(nameFixing(name));
   });
 
   function ucFirstAllWords (str) {
@@ -129,7 +128,7 @@ $(document).ready(function () {
     var newCard = $("<div>").addClass("card card-block");
     var newTitle = $("<h3>").addClass("card-title").append(data[0]);
     var newCenterDiv = $("<div>").addClass("centered");
-    var newBtn = $("<a>").addClass("btn btn-primary").append("Thats Me!");
+    var newBtn = $("<a>").addClass("btn btn-primary useThisName").append("Thats Me!").data('playerName', data[0]);
 
     newBtn.appendTo(newCenterDiv);
     newTitle.appendTo(newCard);
@@ -137,6 +136,20 @@ $(document).ready(function () {
     newCard.appendTo(newCol);
 
     return newCol;
+  }
+
+  $("#pastPlayers").on("click", ".useThisName", function (event) {
+    var elementClicked = $(event.target);
+    var useName = elementClicked.data("playerName");
+    addScore(nameFixing(useName));
+  });
+
+  function nameFixing (nameToBeFixed) {
+    var betterNameInput = nameToBeFixed;
+    betterNameInput = $.trim(betterNameInput);
+    betterNameInput = betterNameInput.toLowerCase();
+    betterNameInput = ucFirstAllWords(betterNameInput);
+    return betterNameInput;
   }
 
   function changeDisplay () {
@@ -153,12 +166,14 @@ $(document).ready(function () {
     }
 
     if (gameState === 4) {
-      showPastPlayers();
+      if (scores) {
+        showPastPlayers();
+      }
+      $('#inputNameField').val("");
       $("#inputScreen").css("display", "block");
-      $("#inputNameField").focus();
+      setTimeout("$('#inputNameField').focus();", 500);
     } else {
       $("#inputScreen").css("display", "none");
-      $("#inputNameField").blur();
     }
 
     if (gameState === 5) {
@@ -368,6 +383,15 @@ $(document).ready(function () {
 
   function addScore (playerName) {
 
+    // console.log(playerName);
+    // for (var i = scores.length - 1; i >= 0; i--) {
+    //   if (scores[i][0] === playerName) {
+    //     console.log("Found a matching player");
+    //    } else {
+    //     console.log(scores[i][0] + " and " + playerName + " did not match");
+    //    }
+    // }
+
     if (playerName === "") {
       showScores();
       return;
@@ -384,13 +408,11 @@ $(document).ready(function () {
     for (var i = scores.length - 1; i >= 0; i--) {
       if (scores[i][0] === playerName) {
         addNewScore = false;
-        if (scores[i][1] >= min) {
-          if (scores[i][2] >= sec) {
-            if (scores[i][3] >= miliSec) {
-              scores.splice(i, 1);
-              addNewScore = true;
-            }
-          }
+        var oldTime = (scores[i][1] * 60 * 1000) + (scores[i][2] * 1000) + (scores[i][3] * 10);
+        var newTime = (min * 60 * 1000) + (sec * 1000) + (miliSec * 10);
+        if (oldTime > newTime) {
+          scores.splice(i, 1);
+          addNewScore = true;
         }
       }
     }
