@@ -194,6 +194,24 @@ $(document).ready(function () {
     }
   }
 
+  $("#clearAllScoresSpan").on("click", function () {
+    scores = [];
+    showScores();
+  })
+
+  $("#clearAllScoresSpan").hover(function(){
+    $(this).css({
+      'color': 'red',
+      'font-weight': 'bold'
+    });
+    }, function(){
+      $(this).css({
+      color: '#777',
+      'font-weight': 'normal'
+    });
+  });
+
+
   function bindDrag () {
     $(".draggable").draggable({ disabled: false });
   }
