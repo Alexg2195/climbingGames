@@ -24,17 +24,6 @@ body {
   position: absolute;
 }
 
-#leaderboard #clearAllScores {
-  font-size: 20px;
-  text-align: center;
-  padding-top: 0px;
-  padding-bottom: 5px;
-}
-
-#leaderboard caption {
-  padding-bottom: 0px;
-}
-
 .form-control {
   height: 45px;
   font-size: 25px;
@@ -75,7 +64,15 @@ body {
   text-align: center;
 }
 
+#leaderboard #clearAllScores {
+  font-size: 20px;
+  text-align: center;
+  padding-top: 0px;
+  padding-bottom: 5px;
+}
+
 #leaderboard caption {
+  padding-bottom: 0px;
   font-size: 60px;
   text-align: center;
 }
@@ -83,6 +80,10 @@ body {
 #leaderboard th {
   border-bottom: 1px solid white;
   text-align: center;
+}
+
+#leaderboardTitle{
+  color: white;
 }
 
 .numRank {
