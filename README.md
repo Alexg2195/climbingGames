@@ -3,6 +3,8 @@
 ##This is live via https://climbing-games.herokuapp.com
 ##This is a indoor rock climbing game used with a projector.
 
+![alt tag](https://cloud.githubusercontent.com/assets/15336070/14512424/fbfe70b8-01ac-11e6-91a2-550d64307b4c.jpg)
+
 The projector will be faced towards the climbing wall and the setup user will place circles across the wall.
 The player is on a race against the clock to tag all the numbered circles in order.
 Top ten scores will be recored.
